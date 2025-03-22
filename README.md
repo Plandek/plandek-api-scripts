@@ -48,7 +48,8 @@ Your contribution will be reviewed by at least two Plandek developers. Upon appr
 
 ## Resources
 
-- **Plandek Custom Time Series API Integration Documentation**: [https://help.plandek.com/en/articles/6955603-plandek-custom-time-series-api-integration](https://help.plandek.com/en/articles/6955603-plandek-custom-time-series-api-integration)
+- **Plandek Custom Time Series API Integration Documentation**: https://help.plandek.com/en/articles/6955603-plandek-custom-time-series-api-integration
+- **Plandek Deployments API Integration Documentation**: https://help.plandek.com/en/articles/8735518-plandek-deployments-api-technical-documentation
 
 ## License
 
