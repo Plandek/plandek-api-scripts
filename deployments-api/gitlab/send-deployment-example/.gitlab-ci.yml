@@ -1,0 +1,41 @@
+image: python:3.9-slim
+
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.pip-cache"
+
+cache:
+  paths:
+    - .pip-cache/
+
+stages:
+  - deploy
+
+send-deployment:
+  stage: deploy
+  script:
+    - pip install -r requirements.txt
+    - >
+      python send_deployment.py
+      --client-key "$PLANDEK_CLIENT_KEY"
+      --pipeline "$CI_PIPELINE_ID"
+      --build "$CI_JOB_ID"
+      --status "$DEPLOYMENT_STATUS"
+      --commits "$CI_COMMIT_SHA"
+      --branch-name "$CI_COMMIT_REF_NAME"
+      --environment "$CI_ENVIRONMENT_NAME"
+      --is-prod "$IS_PROD_DEPLOYMENT"
+      --service-name "$CI_PROJECT_NAME"
+      --release-id "$CI_COMMIT_TAG"
+  environment:
+    name: ${CI_ENVIRONMENT_NAME}
+  rules:
+    - if: $CI_COMMIT_TAG
+      variables:
+        DEPLOYMENT_STATUS: "success"
+        IS_PROD_DEPLOYMENT: "true"
+        CI_ENVIRONMENT_NAME: "production"
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      variables:
+        DEPLOYMENT_STATUS: "success"
+        IS_PROD_DEPLOYMENT: "false"
+        CI_ENVIRONMENT_NAME: "staging"
